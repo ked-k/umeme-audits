@@ -441,15 +441,15 @@
         </div>
     </div>
     @push('scripts')
-    <script>
-        window.addEventListener('close-modal', event => {
-            $('#addMeterResults').modal('hide');
-            $('#receiveMeter').modal('hide');
-            $('#issueMeter').modal('hide');
-        });
-        window.addEventListener('delete-modal', event => {
-            $('#delete_modal').modal('show');
-        });
-    </script>
-@endpush
+        <script>
+            window.addEventListener('close-modal', event => {
+                $('#addMeterResults').modal('hide');
+                $('#receiveMeter').modal('hide');
+                $('#issueMeter').modal('hide');
+            });
+            window.addEventListener('delete-modal', event => {
+                $('#delete_modal').modal('show');
+            });
+        </script>
+    @endpush
 </div>
