@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Storage;
 
 class AuditDetailComponent extends Component
 {
-    public $audit_id, $receiver_action, $receiver_comment,$taken_by,$service_oder_no, $result, $new_meter_no, $issued_to,$energy_recovery, $amount_paid, $status='Result Added';
+    public $audit_id, $receiver_action, $receiver_comment,$taken_by,$service_oder_no, $result, $new_meter_no, $issued_to,$energy_recovery, $amount_paid, 
+    $status ='Result Added';
+    public $status_result;
     public $auditDetails, $meter_charge, $proof_of_payement;
     public function mount($id)
     {
@@ -17,19 +19,32 @@ class AuditDetailComponent extends Component
     }
     public function receiveMeter()
     {
-        Aduit::where('id', $this->audit_id)->update(['status'=>'Received',
-        'received_by'=>auth()->user()->id,
-        'receiver_action'=>$this->receiver_action,
-        'receiver_comment'=>$this->receiver_comment,
-        'taken_by'=>$this->taken_by,
-        'service_oder_no'=>$this->service_oder_no
-    ]);
+       $audit = Aduit::where('id', $this->audit_id)->first();
+       $audit->result='Received';
+       $audit->received_by=auth()->user()->id;
+       $audit->receiver_action=$this->receiver_action;
+       $audit->receiver_comment=$this->receiver_comment;
+       if($this->receiver_action =='Scheduled' && $this->status_result =='Issued'){
+        $audit->status='Issued';
+        $audit->new_meter_no=$this->new_meter_no;
+        $audit->issued_to=$this->issued_to;
+       }else{
+        $audit->status='Received';
+        $audit->taken_by=$this->taken_by;
+        $audit->service_oder_no=$this->service_oder_no;
+       }
+      
+       $audit->update();          
+    
         $this->resetInputs();
         $this->dispatchBrowserEvent('close-modal');
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'Meter received  successfully!']);
     }
     public function addMeterResults()
     {
+        if($this->status ==null){
+            $this->status ='Result Added';
+        }
         Aduit::where('id', $this->audit_id)->update(['status'=>$this->status,
         'result'=>$this->result,
         'new_meter_no'=>$this->new_meter_no,

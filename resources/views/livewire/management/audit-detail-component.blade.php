@@ -298,22 +298,22 @@
                                         <div class="text-danger text-small">{{ $message }}</div>
                                     @enderror
                             </div>
-                                @if ($receiver_action =='Scheduled')
+                                @if ($receiver_action =='Scheduledd')
                                     <div class="mb-3 col-md-12">
                                         <label for="result" class="form-label">Result</label>
-                                        <select name="status" required class="form-control" wire:model.lazy='status' id="status">
+                                        <select name="status" required class="form-control" wire:model='status_result' id="status_result">
                                             <option value="">select</option>
                                             <option value="Issued">Issued</option>
                                             <option value="Not Issued">Not Issued</option>
                                         </select>
-                                            @error('status')
+                                            @error('status_result')
                                                 <div class="text-danger text-small">{{ $message }}</div>
                                             @enderror
                                     </div>
-                                    @if ($status =='Issued')
+                                    @if ($status_result =='Issued')
                                         <div class="mb-3 col-md-12">
                                             <label for="issued_to" class="form-label required">Issued to</label>
-                                            <select name="issued_to" id="issued_to" class="form-control" wire:model.defer="issued_to">
+                                            <select name="issued_to" id="issued_to" class="form-control" wire:model="issued_to">
                                                 <option value="">Select</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{$user->id}}">{{$user->name}}</option>
@@ -325,7 +325,7 @@
                                         </div>
                                         <div class="mb-3 col-md-12">
                                             <label for="new_meter_no" class="form-label required">New Meter No</label>
-                                            <input type="text" id="new_meter_no" class="form-control" name="new_meter_no" required wire:model.lazy="new_meter_no">
+                                            <input type="text" id="new_meter_no" class="form-control" name="new_meter_no" required wire:model.defer="new_meter_no">
                                             @error('new_meter_no')
                                                 <div class="text-danger text-small">{{ $message }}</div>
                                             @enderror
