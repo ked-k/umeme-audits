@@ -10,7 +10,7 @@
                             <h4>{{$audit->purpose}}<br>
                                 CUSTOMER DETAILS</h4>
                             </td>
-                            <td> <span class="pull-right"> {!! QrCode::size(120)->generate('Meter No.#'.$audit->meter_no) !!}</span></td>
+                            <td> <span class="pull-right"> {!! QrCode::size(120)->generate('Meter No.#'.$audit->id) !!}</span></td>
                         </tr>
                     </table>                       
                                     
