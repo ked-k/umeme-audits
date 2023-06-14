@@ -106,7 +106,7 @@
                                 <div class="font-22 ms-auto"><i class="bx bx-dots-horizontal-rounded"></i>
                                 </div>
                             </div>
-                            <livewire:management.admin.anomalychart-component /> 
+                            {{-- <livewire:management.admin.anomalychart-component />  --}}
 
                            
                         </div>
