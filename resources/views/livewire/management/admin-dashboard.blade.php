@@ -1,5 +1,5 @@
 <div>
-    {{-- <script src="{{ asset('assets/plugins/apexcharts-bundle/css/apexcharts.css') }}"></script> --}}
+   
     <div class="row page-titles">
         <div class="col-md-5 align-self-center">
             <h3 class="text-themecolor">Dashboard</h3>
@@ -145,7 +145,6 @@
     </div>
     
     @push('scripts')
-    <script src="{{ asset('assets/plugins/apexcharts-bundle/js/apexcharts.min.js') }}"></script>
 
 
         <script>
