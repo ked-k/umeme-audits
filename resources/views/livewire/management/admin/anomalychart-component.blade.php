@@ -2,7 +2,6 @@
     <div class="chart-container-1" wire:ignore.self>
         <div wire:ignore id="anomalyCounts"></div>
     </div>
-    @push('scripts')
     <script>
 
 
@@ -117,6 +116,4 @@
 
        
     </script>
-   
-@endpush
 </div>

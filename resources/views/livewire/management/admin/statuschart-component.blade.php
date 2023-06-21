@@ -3,10 +3,7 @@
         <div wire:ignore id="anomalyStatus"></div>
         {{-- <canvas id="sampleSchart"></canvas> --}}
     </div>
-    @push('scripts')
-
-                
-        
+  
         <script>
             var options = {
                 series: [
@@ -61,5 +58,4 @@
             chart.render();
         </script>
         
-    @endpush
 </div>
