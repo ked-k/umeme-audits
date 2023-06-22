@@ -60,7 +60,6 @@ return [
 
     //Configure Default Roles and Permissions
     'default_roles' => [
-        // TRAINING MANAGEMENT
         'Management_user' => [
             'view_all_meter_audits',
             'create_meter_audit',
