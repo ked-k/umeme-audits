@@ -24,6 +24,6 @@ class MainbarComponent extends Component
         ->get();
 
         DB::statement("SET sql_mode=(SELECT CONCAT(@@sql_mode, ',ONLY_FULL_GROUP_BY'));");
-        return view('livewire.management.admin.mainbar-component',$data);
+        return view('livewire.management.admin.mainbar-component',$data)->layout('layouts.chart');
     }
 }

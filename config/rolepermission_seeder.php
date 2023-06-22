@@ -43,6 +43,16 @@ return [
                 'view_login_activity',
                 'view_activity_trail',
                 'generate_user_management_reports',
+
+                'view_all_meter_audits',
+                'create_meter_audit',
+                'receive_meter',
+                'issue_meter',
+                'access_key_centre',
+                'request_for_key',
+                'appprove_key_request',
+                'view_reports',
+                'access_settings',
             ],
 
         ],
@@ -50,16 +60,29 @@ return [
 
     //Configure Default Roles and Permissions
     'default_roles' => [
-        //TRAINING MANAGEMENT
-        // 'Training Coordinator' => [
-        //     'access_training_module',
-        //     'access_workshops_centre',
-        //     'access_technical_support_centre',
-        //     'add_training_partner',
-        //     'view_training',
-        //     'view_trainer',
-        //     'view_nominee',
-        // ],
+        // TRAINING MANAGEMENT
+        'Management_user' => [
+            'view_all_meter_audits',
+            'create_meter_audit',
+            'receive_meter',
+            'issue_meter',
+            'access_key_centre',
+            'request_for_key',
+            'appprove_key_request',
+            'view_reports',
+            'access_settings',
+            'create_user',
+        ],
+        'official_user' => [
+            'view_all_meter_audits',
+            'receive_meter',
+            'issue_meter',
+        ],
+        'field_user' => [
+            'create_meter_audit',
+            'access_key_centre',
+            'request_for_key',
+        ],
     ],
 
 ];

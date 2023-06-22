@@ -20,7 +20,7 @@
     <link href="{{ asset('assets/css/colors/blue.css')}}" id="theme" rel="stylesheet">
         <!-- iziToast CSS -->
     <link href="{{ asset('assets/plugins/izitoast/css/iziToast.min.css') }}" rel="stylesheet" type="text/css">
- <script src="{{ asset('assets/plugins/apexcharts-bundle/css/apexcharts.css') }}"></script>
+ {{-- <script src="{{ asset('assets/plugins/apexcharts-bundle/css/apexcharts.css') }}"></script> --}}
     @livewireStyles
         <!-- Push CSS -->
     @stack('css')

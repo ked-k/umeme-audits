@@ -8,6 +8,7 @@
             <div wire:ignore id="mainChart"></div>
         </div>
     </div>
+   @push('scripts')
    <script>
     var optionsb = {
         series: [{
@@ -128,4 +129,5 @@
     var chartb = new ApexCharts(document.querySelector("#mainChart"), optionsb);
     chartb.render();
 </script>
+   @endpush
 </div>

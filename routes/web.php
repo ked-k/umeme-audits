@@ -1,12 +1,18 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Livewire\Management\Admin\AnomalychartComponent;
+use App\Http\Livewire\Management\Admin\MainbarComponent;
+use App\Http\Livewire\Management\Admin\StatuschartComponent;
 use App\Http\Livewire\Management\AdminDashboard;
 use App\Http\Livewire\Management\AuditDetailComponent;
 use App\Http\Livewire\Management\AuditsComponent;
+use App\Http\Livewire\Management\ClusteredKeysComponent;
 use App\Http\Livewire\Management\DistrictsComponent;
 use App\Http\Livewire\Management\FeederComponent;
 use App\Http\Livewire\Management\IssuedMetersComponent;
+use App\Http\Livewire\Management\KeyRequestsComponent;
+use App\Http\Livewire\Management\ManangeKeysComponent;
 use App\Http\Livewire\Management\MetersComponent;
 use App\Http\Livewire\Management\OfficialAuditsComponent;
 use App\Http\Livewire\Management\ZonesComponent;
@@ -42,6 +48,9 @@ Route::group(['middleware' => ['auth', 'password_expired', 'suspended_user']], f
     //     return view('home');
     //   })->middleware(['auth', 'verified'])->name('home');
     Route::get('dashboard', AdminDashboard::class)->name('home');
+    Route::get('keys/requests', KeyRequestsComponent::class)->name('keyRequests');
+    Route::get('keys/non_amr', ManangeKeysComponent::class)->name('nonAmrKeys');
+    Route::get('keys/clustered', ClusteredKeysComponent::class)->name('clusteredBoxKeys');
     
      
     Route::group(['prefix' => 'admin'], function () {
@@ -59,6 +68,8 @@ Route::group(['middleware' => ['auth', 'password_expired', 'suspended_user']], f
           Route::get('official/issued', IssuedMetersComponent::class)->name('official.issued');
         require __DIR__.'/user_mgt.php';
     });
+
+    
 
 
     require __DIR__.'/inventory.php';
