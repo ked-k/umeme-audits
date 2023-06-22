@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('key_requests', function (Blueprint $table) {
-            $table->id();
+            $table->id();            
+            $table->string('request_no')->unique();
             $table->foreignId('created_by')->constrained()->onDelete('Restrict')->onUpdate('Cascade')->references('id')->on('users');
             $table->foreignId('key_id')->constrained()->onDelete('Restrict')->onUpdate('Cascade')->references('id')->on('keys');
             $table->string('reason')->nullable();
