@@ -127,6 +127,9 @@
                                 @if ($audit->anomaly_image !=null)
                                 <a href="javascript:void()" wire:click='downloadAnomalyimage' class="btn btn-info" ><i class="fa fa-download"></i> Anomaly Image</a>
                                 @endif
+                                @if ($audit->form_image !=null)
+                                <a href="javascript:void()" wire:click='downloadAnomalyimage' class="btn btn-info" ><i class="fa fa-download"></i> Form Image</a>
+                                @endif
                                 @if ($audit->police_letter_image !=null)
                                 <a href="javascript:void()"  wire:click='downloadPoliceimage' class="btn btn-info" ><i class="fa fa-download"></i> Police Letter Image</a>
                                 @endif

@@ -1,6 +1,6 @@
 <x-guest-layout>
     <x-slot:title>
-        {{ __('Reset Password | MERP') }}
+        {{ __('Reset Password | UMEME') }}
         </x-slot>
         <div class="card mt-5 mt-lg-0">
             <div class="card-body">

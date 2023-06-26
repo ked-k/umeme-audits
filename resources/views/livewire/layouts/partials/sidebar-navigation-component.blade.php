@@ -28,6 +28,9 @@
                     </ul>
                 </li>
                 @endif
+                @if (Auth::user()->hasPermission(['create_meter_audit']))
+                <li> <a class="waves-effect waves-dark" href="{{route('admin.reports')}}"><i class="fa fa-file"></i><span class="hide-menu">Reports </span></a></li>
+                @endif
                 @if (Auth::user()->hasPermission(['access_settings']))
                 <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-cogs"></i><span class="hide-menu">Settings</span></a>
                     <ul aria-expanded="false" class="collapse">  

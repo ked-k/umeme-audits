@@ -18,6 +18,7 @@ class KeyRequestsComponent extends Component
     public $date_taken;
     public $received_by;
     public $status;
+    public $comment;
     public $date_returned;
 
     public $perPage = 15;
@@ -44,6 +45,10 @@ class KeyRequestsComponent extends Component
 
     public $page_title;
 
+    public $find_key, $parameter;
+
+    public $keyData;
+
     protected $paginationTheme = 'bootstrap';
 
     public function export()
@@ -54,6 +59,7 @@ class KeyRequestsComponent extends Component
     {
         $this->resetInputs();
         $this->mode = 'add';
+        $this->keyData = collect([]);
     }
 
     public function updatingSearch()
@@ -77,20 +83,18 @@ class KeyRequestsComponent extends Component
     public function storeData()
     {
         $this->validate([
-            'box_no'=>'required',
-            'hook_no'=>'required',
-            'box_no'=>'required',
-            'location'=>'required',
-            'feeder'=>'required',
+            // 'request_no'=>'required',
+            'reason'=>'required',
+            'ref_number'=>'required',
+            'description'=>'required',
         ]);
 
         $Key = new Key();
-        $Key->feeder = $this->feeder;
-        $Key->box_no = $this->box_no;
-        $Key->hook_no = $this->hook_no;
-        $Key->padlock_no = $this->padlock_no;
-        $Key->location = $this->location;
-        $Key->type = 'cluster';
+        $Key->request_no = $this->feeder;
+        $Key->key_id = $this->key_id;
+        $Key->reason = $this->reason;
+        $Key->ref_number = $this->ref_number;
+        $Key->description = $this->description;
         $Key->save();
 
         $this->resetInputs();
@@ -100,11 +104,10 @@ class KeyRequestsComponent extends Component
     public function editData(Key $Key)
     {
         $this->edit_id = $Key->id;
-        $this->feeder = $Key->feeder ;
-        $this->box_no= $Key->box_no;
-        $this->hook_no = $Key->hook_no ;
-        $this->padlock_no = $Key->padlock_no;
-        $this->location = $Key->location;
+        $this->key_id = $Key->key_id ;
+        $this->reason= $Key->reason;
+        $this->ref_number = $Key->ref_number ;
+        $this->description = $Key->description;
         $this->mode = 'edit';
         //$this->dispatchBrowserEvent('edit-modal');
     }
@@ -131,19 +134,16 @@ class KeyRequestsComponent extends Component
     public function updateData()
     {
         $this->validate([
-            'box_no'=>'required',
-            'hook_no'=>'required',
-            'box_no'=>'required',
-            'location'=>'required',
-            'feeder'=>'required',
+            'reason'=>'required',
+            'ref_number'=>'required',
+            'description'=>'required',
         ]);
 
         $Key = Key::find($this->edit_id);
-        $Key->feeder = $this->feeder;
-        $Key->box_no = $this->box_no;
-        $Key->hook_no = $this->hook_no;
-        $Key->padlock_no = $this->padlock_no;
-        $Key->location = $this->location;
+        $Key->key_id = $this->key_id;
+        $Key->reason = $this->reason;
+        $Key->ref_number = $this->ref_number;
+        $Key->description = $this->description;
         $Key->update();
 
         $this->resetInputs();
@@ -151,6 +151,41 @@ class KeyRequestsComponent extends Component
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'Key updated successfully!']);
     }
 
+    public function findKey()
+    {
+        $this->keyData = $Key= Key::where(['type',$this->description])->where($this->parameter, $this->find_key)->first();
+        if($this->keyData){
+            $this->key_id = $Key->id;
+            $this->feeder = $Key->feeder ;
+            $this->account_no= $Key->account_no;
+            $this->customer= $Key->customer;
+            $this->meter_number= $Key->meter_number;
+            $this->hook_no = $Key->hook_no ;
+            $this->padlock_no = $Key->padlock_no;
+            $this->location = $Key->location;
+            $this->createNew = true;
+            $this->dispatchBrowserEvent('close-modal');
+            $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'Key found, please proceed!']);
+        }else {
+            $this->dispatchBrowserEvent('swal:modal', [
+                'type' => 'error',
+                'message' => 'No key found!',
+                'text' => 'Please revise your key search paramators!',
+            ]);
+
+        }
+    }
+
+public $feeder;
+public $meter_number;
+public $location;
+public $customer;
+public $account_no;
+public $padlock_no;
+public $anomaly;
+public $hook_no;
+public $box_no;
+public $type;
     public function refresh()
     {
         return redirect(request()->header('Referer'));

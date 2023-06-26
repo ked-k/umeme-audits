@@ -103,6 +103,7 @@
     <script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ asset('assets/js/sort.js') }}"></script>
+    <script src="{{ asset('assets/js/xlsx.full.min.js') }}"></script>
     <script>
     $(document).ready(function() {
         $("#print").click(function() {

@@ -15,6 +15,7 @@ use App\Http\Livewire\Management\KeyRequestsComponent;
 use App\Http\Livewire\Management\ManangeKeysComponent;
 use App\Http\Livewire\Management\MetersComponent;
 use App\Http\Livewire\Management\OfficialAuditsComponent;
+use App\Http\Livewire\Management\Report\UserReportComponent;
 use App\Http\Livewire\Management\ZonesComponent;
 use App\Http\Livewire\UserManagement\UserProfileComponent;
 use Illuminate\Support\Facades\Route;
@@ -66,6 +67,7 @@ Route::group(['middleware' => ['auth', 'password_expired', 'suspended_user']], f
           Route::get('audit/{id}/preview', AuditDetailComponent::class)->name('preview.audit')->middleware('signed');
           Route::get('official/audits', OfficialAuditsComponent::class)->name('official.audit');
           Route::get('official/issued', IssuedMetersComponent::class)->name('official.issued');
+          Route::get('audits/reports', UserReportComponent::class)->name('admin.reports');
         require __DIR__.'/user_mgt.php';
     });
 

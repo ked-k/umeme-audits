@@ -11,6 +11,8 @@ use App\Models\Management\Aduit;
 use App\Models\Management\Feeder;
 use App\Models\Management\District;
 use App\Models\Management\MeterType;
+use Illuminate\Http\Request;
+use Stevebauman\Location\Facades\Location;
 
 class AuditsComponent extends Component
 {
@@ -65,11 +67,14 @@ class AuditsComponent extends Component
     public $police_letter = 1;
     public $police_letter_image;
     public $box_image;
+    public $form_image;
     public $house_image;
     public $date_received;
     public $received_by;
     public $receiver_action;
     public $receiver_comment;
+    public $currentUserInfo;
+    public $cordinates;
     public function export()
     {
         // return (new AduitsExport())->download('Aduits.xlsx');
@@ -90,6 +95,9 @@ class AuditsComponent extends Component
 
     public function mount()
     {
+       
+       
+        // dd($this->currentUserInfo);
         $this->page_title = 'Sample Types';
     }
 
@@ -152,6 +160,7 @@ class AuditsComponent extends Component
             'police_letter_image'=>'nullable|mimes:jpg,bmp,png,pdf,docx|max:10240|file|min:2',
             'box_image'=>'nullable|mimes:jpg,bmp,png,pdf,docx|max:10240|file|min:2',
             'house_image'=>'nullable|mimes:jpg,bmp,png,pdf,docx|max:10240|file|min:2',
+            'form_image'=>'nullable|mimes:jpg,bmp,png,pdf,docx|max:10240|file|min:2',
         ]);
 
     }
@@ -183,7 +192,14 @@ class AuditsComponent extends Component
             $house_name = date('Ymdhis').'_'.time().'.'.$this->house_image->extension();
             $house_path = $this->house_image->storeAs($path, $house_name);
         }
-
+        if($this->form_image !=''){
+            $path = 'Umeme/Audits/form/'.date("Y-m");
+            $form_name = date('Ymdhis').'_'.time().'.'.$this->form_image->extension();
+            $form_path = $this->form_image->storeAs($path, $form_name);
+        }
+        $ip = Request()->ip();
+        // $ip = '41.75.176.139'; /* Static IP address */
+        $currentUserInfo = Location::get($ip);
         $Aduit = new Aduit();
         $Aduit->purpose = $this->purpose;
         $Aduit->anomaly = $this->anomaly;
@@ -210,7 +226,12 @@ class AuditsComponent extends Component
         $Aduit->police_letter_image = $police_path;
         $Aduit->police_letter = $this->police_letter;
         $Aduit->box_image = $box_path;
-        $Aduit->house_image = $house_path;
+        $Aduit->house_image = $house_path;        
+        $Aduit->form_image = $form_path;
+        $Aduit->cordinates = $this->cordinates;
+        $Aduit->latitude = $currentUserInfo->latitude??null;
+        $Aduit->longitude = $currentUserInfo->longitude??null;
+        $Aduit->city = $currentUserInfo->cityName??null;
         
         $Aduit->save();
 
@@ -355,6 +376,22 @@ class AuditsComponent extends Component
     public function close()
     {
         $this->resetInputs();
+    }
+
+    public $latitude;
+    public $longitude;
+
+    protected $listeners = ['coordinatesSubmitted'];
+
+    public function submitForm()
+    {
+        // Handle form submission
+    }
+
+    public function coordinatesSubmitted($latitude, $longitude)
+    {
+        $this->latitude = $latitude;
+        $this->longitude = $longitude;
     }
 
     public function render()

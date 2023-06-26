@@ -78,41 +78,49 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 
-                <form @if ($mode == 'edit') wire:submit.prevent="updateData" @else  wire:submit.prevent="storeData" @endif>
+                <form  wire:submit.prevent="findKey">
                     <div class="modal-body">
-                       
                         <div class="row">
-                        
                             <div class="mb-3 col-md-12">
-                                <label for="location" class="form-label">Location</label>
-                                <input type="text" id="location" class="form-control" name="location" required wire:model.defer="location">
-                                @error('location')
+                                <label for="purpose" class="form-label">Type<small class="text-danger">*</small></label>
+                                <select class="form-control select2" id="description" wire:model.lazy="description">
+                                    <option value="" selected>Select</option>
+                                    <option value="non_amr">Non -AMR Key Request</option>
+                                    <option value="cluster">Clustered Key Request</option>
+                                </select>
+                                @error('purpose')
                                     <div class="text-danger text-small">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="mb-3 col-md-12">
-                                <label for="box_no" class="form-label">Box number</label>
-                                <input type="text" id="box_no" class="form-control" name="box_no" required wire:model.defer="box_no">
-                                @error('box_no')
-                                    <div class="text-danger text-small">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="mb-3 col-md-12">
-                                <label for="hook_no" class="form-label">Hook number</label>
-                                <input type="text" id="meter_number" class="form-control" name="hook_no" required wire:model.defer="hook_no">
-                                @error('hook_no')
-                                    <div class="text-danger text-small">{{ $message }}</div>
-                                @enderror
-                            </div>    
-                            <div class="mb-3 col-md-12">
-                                <label for="hook_no" class="form-label">Padlock number</label>
-                                <input type="text" id="padlock_no" class="form-control" name="padlock_no" required wire:model.lazy="padlock_no">
-                                @error('padlock_no')
-                                    <div class="text-danger text-small">{{ $message }}</div>
-                                @enderror
-                            </div>                          
+                                <div class="mb-3 col-md-12">
+                                    
+                                    <label for="find_key" class="form-label required">Search parameter<small class="text-danger">*</small></label>
+                                    <div class="input-group">
+                                        <div class="form-group">
+                                            <select class="form-control select2" id="parameter" wire:model.defer="parameter">
+                                                <option value="" selected>Select</option>
+                                                @if ($description =='non_amr')                                                    
+                                                    <option value="meter_number">Meter No</option>
+                                                    <option value="account_no">Account No</option>
+                                                @else                                                    
+                                                    <option value="box_no">Box No</option>
+                                                @endif
+                                                <option value="padlock_no">Padlock No</option>
+                                                <option value="hook_no">Hook No</option>
+                                            </select>
+                                            @error('purpose')
+                                                <div class="text-danger text-small">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" id="find_key" required class="form-control" wire:model.defer="find_key">
+                                                @error('find_key')
+                                                <div class="text-danger text-small">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>                                   
+                                </div> 
                         </div>
-                     
                     </div>                
 
                     <div class="modal-footer">

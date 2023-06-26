@@ -1,5 +1,5 @@
 @extends('layouts.guest')
-@section('title', 'Login|UMEME AFDB')
+@section('title', 'Login|UMEME')
 @section('content')
 
 <section id="wrapper">

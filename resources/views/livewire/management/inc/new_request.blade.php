@@ -18,7 +18,7 @@ wire:submit.prevent="updateData" @endif
     @if ($purpose =='Complaint')
         <div class="mb-3 col-md-3">
             <label for="customer_ref_no" class="form-label required">Customer Ref<small class="text-danger">*</small></label>
-            <input type="text"  style="text-transform: uppercase" id="customer_ref_no" required class="form-control" wire:model.lazy="customer_ref_no">
+            <input type="text" style="text-transform: uppercase" id="customer_ref_no" required class="form-control" wire:model.lazy="customer_ref_no">
                 @error('customer_ref_no')
                 <div class="text-danger text-small">{{ $message }}</div>
             @enderror
@@ -59,7 +59,7 @@ wire:submit.prevent="updateData" @endif
 
     <div class="mb-3 col">
         <label for="meter_number" class="form-label">Meter No<small class="text-danger">*</small></label>
-        <input type="text" style="text-transform: uppercase" id="meter_number" class="form-control"
+        <input type="text" id="meter_number" class="form-control"
             wire:model.defer="meter_number">
         @error('meter_number')
             <div class="text-danger text-small">{{ $message }}</div>
@@ -248,25 +248,23 @@ wire:submit.prevent="updateData" @endif
             @enderror
         </div>
         @else
-        <div class="mb-3 col-md-2">
-            <label for="anomaly_image" class="form-label">Anomaly Photo <small class="text-danger">*</small></label>
-            <input type="file" id="anomaly_image_{{$iteration}}" class="form-control" required wire:model="anomaly_image">
-            <div class="text-success text-small" wire:loading wire:target="anomaly_image">Uploading anomaly_image</div>
-            @error('anomaly_image')
-                <div class="text-danger text-small">{{ $message }}</div>
-            @enderror
-        </div>                
-        @endif 
-        {{-- @if($anomaly !='Meter Ok')   --}}
-        <div class="mb-3 col-md-2">
-            <label for="form_image_" class="form-label">Form Photo <small class="text-danger">*</small></label>
-            <input type="file" id="form_image_{{$iteration}}" class="form-control" required wire:model="form_image">
-            <div class="text-success text-small" wire:loading wire:target="form_image">Uploading form_image_</div>
-            @error('form_image_')
-                <div class="text-danger text-small">{{ $message }}</div>
-            @enderror
-        </div>               
-        {{-- @endif --}}
+            <div class="mb-3 col-md-2">
+                <label for="anomaly_image" class="form-label">Anomaly Photo <small class="text-danger">*</small></label>
+                <input type="file" id="anomaly_image_{{$iteration}}" class="form-control" required wire:model="anomaly_image">
+                <div class="text-success text-small" wire:loading wire:target="anomaly_image">Uploading anomaly_image</div>
+                @error('anomaly_image')
+                    <div class="text-danger text-small">{{ $message }}</div>
+                @enderror
+            </div>     
+            <div class="mb-3 col-md-2">
+                <label for="form_image_" class="form-label">Form Photo <small class="text-danger">*</small></label>
+                <input type="file" id="form_image_{{$iteration}}" class="form-control" required wire:model="form_image_">
+                <div class="text-success text-small" wire:loading wire:target="form_image_">Uploading form_image_</div>
+                @error('form_image_')
+                    <div class="text-danger text-small">{{ $message }}</div>
+                @enderror
+            </div>           
+        @endif
         @if($anomaly != 'Meter Ok')
             <div class="mb-3 col-md-4">
                 <label for="action_taken" class="form-label">Action<small class="text-danger">*</small></label>
@@ -306,14 +304,7 @@ wire:submit.prevent="updateData" @endif
 
 </div>
 <div class="modal-footer">
-   
-    <a style="margin-bottom:4px;" onclick="showPosition();" class="btn btn-info" id="me"><i class="fa fa-map-marker-alt menu-icon"></i>Get Coordnates</a>
-    <div class="input-group">
-      <div class="input-group-prepend">
-      </div>
-       <input type="text" readonly name="geo" wire:model.defer='cordinates' class="form-control" id="result" required>
-    </div>
-        @if ($mode=='add')
+    @if ($mode=='add')
         <x-button class="btn-sm btn-success">{{ __('Save') }}</x-button>
     @else
         <x-button class=" btn-sm btn-success">{{ __('Update') }}</x-button>
@@ -324,41 +315,3 @@ wire:submit.prevent="updateData" @endif
 </div>
 <hr>
 </form>
-@push('scripts')
-
-<script>
-    // Set up global variable
-    var result;
-    
-    function showPosition() {
-        // Store the element where the page displays the result
-        result = document.getElementById("result");
-        
-        // If geolocation is available, try to get the visitor's position
-        if(navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
-            result.value = "Getting the position information...";
-        } else {
-            alert("Sorry, browser unsupported by geolocation. Try google chrome");
-        }
-    };
-    
-    // Define callback function for successful attempt
-    function successCallback(position) {
-        result.value = position.coords.latitude +  " " + position.coords.longitude;
-    }
-    
-    // Define callback function for failed attempt
-    function errorCallback(error) {
-        if(error.code == 1) {
-            result.value = "User denied the request for Geolocation.";
-        } else if(error.code == 2) {
-            result.value = "The network is down or the positioning service can't be reached.";
-        } else if(error.code == 3) {
-            result.value = "The attempt timed out before it could get the location data.";
-        } else {
-            result.value = "Geolocation failed due to unknown error.";
-        }
-    }
-</script>
-@endpush
