@@ -31,8 +31,12 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
-        return redirect()->intended(RouteServiceProvider::HOME);
+        if (Auth::user()->hasPermission(['view_reports'])){
+            return redirect()->intended(RouteServiceProvider::HOME);
+        }else{
+            return to_route('audits');  
+        }
+        
     }
 
     /**
