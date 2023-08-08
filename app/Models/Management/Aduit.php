@@ -109,6 +109,7 @@ class Aduit extends Model
             : static::query()
                ->where('meter_number', 'like', '%'.$search.'%')
                ->where('customer_ref_no', 'like', '%'.$search.'%')
+               ->where('customer', 'like', '%'.$search.'%')
                ->where('customer_contact', 'like', '%'.$search.'%')
                ->orWhereHas('district', function ($query) use ($search) {
                 $query->where('name', 'like', '%'.$search.'%');

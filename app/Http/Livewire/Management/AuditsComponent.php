@@ -12,6 +12,7 @@ use App\Models\Management\Feeder;
 use App\Models\Management\District;
 use App\Models\Management\MeterType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Stevebauman\Location\Facades\Location;
 
 class AuditsComponent extends Component
@@ -22,7 +23,7 @@ class AuditsComponent extends Component
 
     public $search = '';
 
-    public $orderBy = 'anomaly';
+    public $orderBy = 'created_at';
 
     public $orderAsc = true;
     public $createNew = false;
@@ -172,6 +173,7 @@ class AuditsComponent extends Component
        $box_path = null;
        $house_path =null;
 
+       try {
         if($this->anomaly_image !=''){
             $path = 'Umeme/Audits/anomalies/'.date("Y-m");
             $anomaly_name = date('Ymdhis').'_'.time().'.'.$this->anomaly_image->extension();
@@ -238,6 +240,18 @@ class AuditsComponent extends Component
         $this->resetInputs();
         $this->dispatchBrowserEvent('close-modal');
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'Aduit created successfully!']);
+        
+        } catch (\Exception $error) {
+            Log::error($error . 'not saved.');
+            Log::info($error);		// informational messages
+            Log::debug($error);	
+            $this->dispatchBrowserEvent('swal:modal', [
+                'type' => 'warning',
+                'message' => 'Something went wrong!',
+                'text' => 'Failed data not saved!'. $error,
+            ]);
+             $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => 'Aduit record not created!']);
+        }
     }
     public function editData(Aduit $Aduit)
     {

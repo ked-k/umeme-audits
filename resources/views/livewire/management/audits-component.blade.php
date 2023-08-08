@@ -11,8 +11,8 @@
                             <div class="d-flex align-items-center ml-4 col-md-3">
                                 <label for="orderBy" class="form-label text-nowrap mr-2 mb-0">OrderBy</label>
                                 <select wire:model="orderBy" class="form-control">
-                                    <option type="name">Name</option>
-                                    <option type="id">Latest</option>
+                                    <option value="meter_number">Meter number</option>
+                                    <option value="id">Latest</option>
                                 </select>
                             </div>
                         </x-table-utilities>
