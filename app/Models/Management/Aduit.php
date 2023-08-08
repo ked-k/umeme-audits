@@ -108,9 +108,9 @@ class Aduit extends Model
         return empty($search) ? static::query()
             : static::query()
                ->where('meter_number', 'like', '%'.$search.'%')
-               ->where('customer_ref_no', 'like', '%'.$search.'%')
-               ->where('customer', 'like', '%'.$search.'%')
-               ->where('customer_contact', 'like', '%'.$search.'%')
+               ->orWhere('customer_ref_no', 'like', '%'.$search.'%')
+               ->orWhere('customer', 'like', '%'.$search.'%')
+               ->orWhere('customer_contact', 'like', '%'.$search.'%')
                ->orWhereHas('district', function ($query) use ($search) {
                 $query->where('name', 'like', '%'.$search.'%');
             });
