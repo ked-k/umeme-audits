@@ -197,6 +197,7 @@
                                                 <th>Anomaly</th>
                                                 <th>Status</th>
                                                 <th>Created at</th>
+                                                <th>Created by</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -212,6 +213,7 @@
                                                     <td>{{ $audit->anomaly ?? 'N/A' }}</td>
                                                     <td>{{ $audit->status ?? 'N/A' }}</td>
                                                     <td>{{ date('d-m-Y', strtotime($audit->created_at)) }}</td>
+                                                    <td>{{ $audit->user->name??'-' }}</td>
                                                     <td class="table-action">
                                                         
                                                         <a target="_blank" href="{{URL::SignedRoute('preview.audit', $audit->id)}}" title="view more detils" class="action-ico text-success mx-1 " ><i class="fa fa-eye"></i></a>
