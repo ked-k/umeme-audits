@@ -28,6 +28,7 @@
                                         <th>Location</th>
                                         <th>Anomaly</th>
                                         <th>Status</th>
+                                        <th>Created by</th>
                                         <th>Created at</th>
                                         <th>Action</th>
                                     </tr>
@@ -43,6 +44,7 @@
                                             <td>{{ $audit->location ?? 'N/A' }}</td>
                                             <td>{{ $audit->anomaly ?? 'N/A' }}</td>
                                             <td>{{ $audit->status ?? 'N/A' }}</td>
+                                            <td>{{ $audit->user->name??'-' }}</td>
                                             <td>{{ date('d-m-Y', strtotime($audit->created_at)) }}</td>
                                             <td class="table-action">
                                                 <a href="javascript: void(0);" class="action-ico text-success mx-1 "
