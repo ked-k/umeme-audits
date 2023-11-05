@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 text-center">
-                <script>document.write(new Date().getFullYear())</script> © UMEME UG
+                <script>document.write(new Date().getFullYear())</script> © MID-LAND-CARGO UG
             </div>
 
         </div>

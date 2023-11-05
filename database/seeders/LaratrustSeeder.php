@@ -68,9 +68,9 @@ class LaratrustSeeder extends Seeder
                     'signature' => null,
                     'created_by' => 1,
                     'password_updated_at' => now(),
-                    'email' => Str::lower($user_role).'@umeme.com',
+                    'email' => Str::lower($user_role).'@midland.com',
                     'email_verified_at' => now(),
-                    'password' => bcrypt('admin@umeme'),
+                    'password' => bcrypt('admin@midland'),
                     'remember_token' => Str::random(10),
                 ]);
                 $user->attachRole($role);

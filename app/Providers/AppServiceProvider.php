@@ -27,11 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (Auth::user()) {   // Check is user logged in
-            View::share('facilityInfo', Institution::where('id', auth()->user()->id)->first());
-        } else {
-            View::share('facilityInfo', []);
-        }
+       
 
         Blade::directive('money_formart', function ($figure) {
             return "<?php echo number_format($figure,3); ?>";
